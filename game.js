@@ -60,7 +60,7 @@ function handleTouch() {
 
         if (currentStage > totalStages) {
             gameState = "LANDING";
-            tutorialText = "DOUBLE TAP - otwórz spadochron!";
+            tutorialText = "STUKNIJ - lądowanie na Księżycu!";
         }
     } else if (gameState === "LANDING") {
         createDust(canvas.width / 2, canvas.height - 100);
@@ -91,6 +91,24 @@ function createDust(x, y) {
             alpha: 1.0
         });
     }
+}
+
+// Rysowanie pasażera/astronautów w kodzie
+function drawAstronaut(x, y, color, visorColor) {
+    ctx.save();
+    // Ciało
+    ctx.fillStyle = color;
+    ctx.fillRect(x - 8, y - 10, 16, 20);
+    // Głowa
+    ctx.beginPath();
+    ctx.arc(x, y - 14, 8, 0, Math.PI * 2);
+    ctx.fill();
+    // Wizjer
+    ctx.fillStyle = visorColor;
+    ctx.beginPath();
+    ctx.arc(x, y - 14, 4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
 }
 
 function update() {
@@ -125,9 +143,12 @@ function draw() {
 
         let rx = canvas.width / 2;
         let ry = canvas.height - 150;
+        
+        // Rakieta
         ctx.fillStyle = "#FFF";
         ctx.fillRect(rx - 15, ry, 30, 50);
 
+        // Płomień
         ctx.fillStyle = "#FF9500";
         ctx.beginPath();
         ctx.moveTo(rx - 10, ry + 50);
@@ -158,13 +179,18 @@ function draw() {
         ctx.fillStyle = "#A0A0A0";
         ctx.fillText("FIRST STEPS TO LUNA", canvas.width / 2, 145);
 
+        // Rysowanie załogi w menu
+        drawAstronaut(canvas.width / 2 - 30, 200, "#FFFFFF", "#007AFF");
+        drawAstronaut(canvas.width / 2, 200, "#F1C40F", "#2ECC71");
+        drawAstronaut(canvas.width / 2 + 30, 200, "#E67E22", "#E74C3C");
+
         ctx.fillStyle = "#FFF";
         ctx.font = "18px sans-serif";
-        ctx.fillText(`Kredyty: ${credits} $`, canvas.width / 2, 190);
-        ctx.fillText(`Ludzie na Księżycu: ${moonPassengers}`, canvas.width / 2, 220);
+        ctx.fillText(`Kredyty: ${credits} $`, canvas.width / 2, 260);
+        ctx.fillText(`Ludzie na Księżycu: ${moonPassengers}`, canvas.width / 2, 290);
         
         ctx.fillStyle = "#00FFC8";
-        ctx.fillText("Dotknij ekranu, aby rozpocząć!", canvas.width / 2, canvas.height / 2 + 50);
+        ctx.fillText("Dotknij ekranu, aby rozpocząć!", canvas.width / 2, canvas.height / 2 + 100);
     }
 }
 
